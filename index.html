@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дикий захід × Марія Василенко</title>
+<style>
+:root{--bg:#f5f0e4;--bg2:#fbf8f1;--ink:#2a2823;--soft:#3d3a32;--muted:#6f6a5a;--line:#dcd4c1;--accent:#2f7a66;--accent-ink:#ffffff;--card:#ebe5d6;--head:60px;
+ --headbg:rgba(245,240,228,.92);--chip:#e9e2d0;--btn:#fbf8f1;--glass:rgba(251,248,241,.92);--mapbg:#d9d3c4;--wgrad:linear-gradient(#ebe5d6,#f5f0e4);
+ --okbg:#d5ebe1;--okfg:#1d5a47;--nobg:#f1dfd0;--nofg:#8a4a24;--shadow:rgba(60,50,30,.28)}
+:root[data-theme=dark]{--bg:#24231f;--bg2:#2d2c27;--ink:#f2ede1;--soft:#e4dfd2;--muted:#b9b3a3;--line:#47453c;--accent:#6fb59f;--accent-ink:#10231d;--card:#d9d3c4;
+ --headbg:rgba(36,35,31,.92);--chip:#33322c;--btn:#2f2e29;--glass:rgba(36,35,31,.9);--mapbg:#3b3a33;--wgrad:linear-gradient(#2a2924,#24231f);
+ --okbg:#25443a;--okfg:#a8e0cd;--nobg:#4a3a30;--nofg:#e8c3a6;--shadow:rgba(0,0,0,.45)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+h1,h2,h3,.serif{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-weight:500}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+header{position:sticky;top:0;z-index:20;background:var(--headbg);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{height:var(--head);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-family:"Iowan Old Style",Georgia,serif;font-size:15px;line-height:1.15;cursor:pointer}
+.logo small{display:block;white-space:nowrap;font-family:inherit;color:var(--muted);font-size:11px}
+nav{display:flex;gap:2px;flex:none}
+.logo{min-width:0}
+#theme{display:flex;align-items:center;padding:8px 10px}
+@media(max-width:430px){nav [data-go=about]{display:none}}
+nav button{background:none;border:0;color:var(--muted);font:inherit;font-size:13.5px;padding:8px 9px;border-radius:9px;cursor:pointer}
+nav button:hover{color:var(--ink);background:var(--chip)}
+.tag{display:inline-block;padding:1px 6px;border-radius:6px;background:var(--accent);color:var(--accent-ink);font-size:10px;font-weight:700;vertical-align:2px;margin-left:4px}
+section{scroll-margin-top:calc(var(--head) + 6px)}
+.btn{display:inline-block;text-align:center;text-decoration:none;font:inherit;font-size:15px;padding:13px 18px;border-radius:13px;border:1px solid var(--line);background:var(--btn);color:var(--ink);cursor:pointer}
+.btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 170px}
+
+/* головний екран */
+#hero{padding:44px 0 34px}
+#hero h1{font-size:clamp(34px,9vw,52px);line-height:1.05;margin:0 0 14px}
+#hero p{font-size:17px;color:var(--soft);margin:0 0 22px;max-width:30em}
+/* сторінка роботи */
+#work{padding:22px 0 30px;background:var(--wgrad)}
+#work[hidden]{display:none}
+.pic{display:flex;justify-content:center;margin:6px 0 18px}
+.pic img{max-height:52vh;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 18px var(--shadow))}
+.pic.no{display:none}
+.n{font-size:12px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+#work h2{font-size:28px;line-height:1.15;margin:2px 0 10px}
+.st{display:inline-block;font-size:12px;padding:3px 10px;border-radius:99px;margin-bottom:14px}
+.st.ok{background:var(--okbg);color:var(--okfg)}.st.no{background:var(--nobg);color:var(--nofg)}
+#work p{font-size:17px;color:var(--soft);margin:0 0 20px}
+.small{font-size:13px;color:var(--muted);margin-top:12px}
+.link{display:inline-block;background:none;border:0;padding:0;margin:0 18px 0 0;font:inherit;font-size:15px;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.links{display:flex;flex-wrap:wrap;gap:6px 0;padding-top:2px}
+#work .link{margin-top:2px}
+/* мапа */
+#map{padding:34px 0 10px}
+#map h2,#gallery h2,#about h2{font-size:26px;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 16px;font-size:15px}
+#view{position:relative;width:100%;aspect-ratio:var(--ar,1175/810);overflow:hidden;border-radius:16px;background:var(--mapbg);border:1px solid var(--line);touch-action:pan-y}
+#view.full{position:fixed;inset:0;z-index:50;aspect-ratio:auto;border-radius:0;border:0;touch-action:none;cursor:grab}
+#view.full.drag{cursor:grabbing}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0}
+#stage img{display:block;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.lbl{position:absolute;transform:translate(-50%,-50%) scale(calc(1 / var(--s,1)));font:italic 600 14px/1 Georgia,'Times New Roman',serif;letter-spacing:.05em;color:#2b2a26;background:rgba(232,228,214,.85);padding:5px 9px;border-radius:3px;pointer-events:none;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.lbl.river{background:none;box-shadow:none;color:#eef6f2;font-size:17px;letter-spacing:.3em;text-shadow:0 1px 3px rgba(0,40,50,.6);transform:translate(-50%,-50%) scale(calc(1 / var(--s,1))) rotate(-84deg)}
+.lbl.sm{background:none;box-shadow:none;padding:0;font:italic 600 12px/1.15 Georgia,'Times New Roman',serif;letter-spacing:.02em;color:#24231f;text-shadow:0 0 3px rgba(236,232,218,.95),0 0 6px rgba(236,232,218,.85),0 0 1px #ece8da;transform:translate(-5px,-50%) scale(calc(1 / var(--s,1)));transform-origin:5px 50%;padding-left:14px;opacity:0;transition:opacity .25s}
+.lbl.sm::before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;margin-top:-4px;border-radius:50%;background:#2b2a26;border:1px solid #ece8da}
+.lbl.sm.l{padding:0 14px 0 0;transform:translate(calc(-100% + 5px),-50%) scale(calc(1 / var(--s,1)));transform-origin:calc(100% - 5px) 50%}
+.lbl.sm.l::before{left:auto;right:0}
+.lbl.sm.nd{padding:0;transform:translate(-50%,-50%) scale(calc(1 / var(--s,1))) rotate(var(--r,0deg));transform-origin:50% 50%;color:#33402f;letter-spacing:.06em}
+.lbl.sm.nd::before{display:none}
+.lbl.sm.road{color:#e9e5d6;text-shadow:0 0 3px rgba(40,40,36,.9),0 0 6px rgba(40,40,36,.7);letter-spacing:.18em;font-size:11px}
+#view.zin .lbl.sm{opacity:1}
+.pin{position:absolute;width:46px;height:46px;margin:0;padding:0;border:0;background:none;transform:translate(-50%,-50%) scale(calc(1 / var(--s,1)));cursor:pointer}
+.pin i{position:absolute;inset:5px;border-radius:50%;background:#d9d3c4 center/contain no-repeat;border:3px solid #2b2a26;box-shadow:0 1px 6px rgba(0,0,0,.45);transition:transform .15s}
+.pin.gone i{background-color:transparent;border-style:dashed;border-color:#e9e4d6;box-shadow:none}
+.pin.gone i::after{content:"×";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#e9e4d6;font-size:15px}
+.pin.on i{transform:scale(1.25);border-color:var(--accent)}
+.pin.on::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent);animation:p 1.6s ease-out infinite}
+@keyframes p{from{transform:scale(.7);opacity:1}to{transform:scale(1.8);opacity:0}}
+.mbtn{position:absolute;right:10px;bottom:10px;z-index:5;border:0;border-radius:11px;background:var(--glass);color:var(--ink);box-shadow:0 1px 6px var(--shadow);font:inherit;font-size:13px;padding:9px 12px;cursor:pointer}
+#view.full .mbtn{display:none}
+.fl{display:none}
+#view.full ~ .fl,body.fullmode .fl{display:flex}
+.fl{position:fixed;z-index:60;right:12px;bottom:calc(env(safe-area-inset-bottom) + 14px);flex-direction:column;gap:6px}
+.fl button{width:42px;height:42px;border:0;border-radius:12px;background:var(--glass);color:var(--ink);box-shadow:0 1px 6px var(--shadow);font-size:22px;cursor:pointer}
+.closefull{display:none;position:fixed;z-index:60;left:12px;top:calc(env(safe-area-inset-top) + 12px);border:0;border-radius:12px;background:var(--glass);color:var(--ink);box-shadow:0 1px 6px var(--shadow);font:inherit;font-size:14px;padding:11px 14px;cursor:pointer}
+body.fullmode .closefull{display:block}
+.sheet{position:fixed;z-index:60;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);border-radius:20px 20px 0 0;padding:14px 16px calc(env(safe-area-inset-bottom) + 16px);transform:translateY(105%);transition:transform .22s;box-shadow:0 -8px 30px var(--shadow)}
+.sheet:not(.open){visibility:hidden;transition:transform .22s,visibility 0s .22s}
+.sheet.open{transform:none;visibility:visible}
+.sheet .top{display:flex;gap:14px;align-items:center;margin-bottom:12px;padding-right:40px}
+.sheet img{width:64px;height:64px;object-fit:contain;background:var(--card);border-radius:12px;padding:4px;flex:none}
+.sheet img.no{display:none}
+.sheet h3{margin:0;font-size:19px}
+.x{position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:50%;border:0;background:var(--chip);color:var(--ink);font-size:18px;cursor:pointer}
+/* галерея */
+#gallery{padding:34px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{border:0;padding:0;background:var(--bg2);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-align:left;color:var(--ink);font:inherit;cursor:pointer}
+.card .im{height:150px;background:var(--card);display:flex;align-items:center;justify-content:center;padding:12px}
+.card .im img{max-width:100%;max-height:100%;object-fit:contain}
+.card .im.gone{background:var(--chip);color:var(--muted);font-size:13px}
+.card div.t{padding:9px 11px 11px;font-size:14px}
+.card small{display:block;color:var(--muted);font-size:12px}
+#about{padding:34px 0 50px}
+#about p{font-size:16.5px;color:var(--soft);margin:0 0 12px}
+footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo" id="logo"><span data-i="title"></span><small><span data-i="place"></span> <span class="tag" data-i="test"></span></small></div>
+  <nav><button id="lang" aria-label="Language / Мова">EN</button></nav>
+</div></header>
+
+<section id="work" hidden><div class="wrap">
+  <div class="pic" id="wPic"><img id="wImg" alt=""></div>
+  <div class="n" id="wN"></div>
+  <h2 id="wT"></h2>
+  <div class="st" id="wS"></div>
+  <p id="wD"></p>
+
+</div></section>
+
+
+
+<section id="map"><div class="wrap">
+  <h2 id="mapHead" data-i="mapH"></h2>
+  <p class="lead" data-i="mapLead"></p>
+  <div id="view"><div id="stage"><img alt="Мапа" src="assets/map.jpg"></div><button class="mbtn" id="expand" data-i="expand"></button></div>
+</div></section>
+
+
+
+
+
+
+<button class="closefull" id="closeFull" data-i="closeMap"></button>
+<div class="fl"><button id="zin" aria-label="Збільшити">+</button><button id="zout" aria-label="Зменшити">−</button></div>
+<div class="sheet" id="sheet">
+  <button class="x" id="sx" aria-label="Закрити">×</button>
+  <div class="top"><img id="sI" alt=""><div><h3 id="sT"></h3><div class="st" id="sS" style="margin:4px 0 0"></div></div></div>
+  <div class="links"><button class="link" id="sOpen" data-i="workPage"></button></div>
+</div>
+
+<script src="data/works.js"></script>
+<script>
+var $=function(i){return document.getElementById(i)};
+var IW=2100,IH=2850;
+
+// ТЕСТОВІ дані: x,y — відсотки на мапі; ok:false — зникла
+var T={
+uk:{title:"Дикий захід × Марія Василенко",place:"Золоті Ворота · Поділ",test:"ТЕСТ",nMap:"Мапа",nGallery:"Роботи",nAbout:"Про проєкт",
+ moreWorks:"Де ще знайти роботи →",route:"Прокласти маршрут",heroH:"Мистецтво без запрошення",
+ heroP:"Роботи Марії Василенко з’явилися на стінах, деревах і стовпах Золотих Воріт та Подолу. Достатньо підняти очі.",
+ openMap:"Відкрити мапу",about:"Про проєкт",mapH:"Мапа",mapMore:"Де ще знайти роботи",mapLead:"Торкніться роботи на мапі, щоб прочитати про неї. Знайти всі не обов’язково.",expand:"⤢ На весь екран",
+ galH:"Роботи",galLead:"Усі роботи списком.",aboutH:"Про проєкт",
+ a1:"Роботи на алюмінії з’являються в місті без запрошення: на стінах, деревах і стовпах. Без відкриття й без анонсу.",
+ a2:"Ми не знаємо, скільки вони проживуть. Це частина проєкту.",
+ a3:"Вам не треба знаходити всі. Якщо ви побачили одну, зупинилися на кілька секунд і пішли далі, цього вже достатньо.",
+ aNote:"Тестовий текст. Справжній напишемо разом з Марією.",footer:"Дикий захід × Марія Василенко · тестова версія",
+ closeMap:"✕ Закрити мапу",workPage:"Відкрити сторінку роботи",workNo:"Робота № ",on:"Висить",gone:"Зникла",mapAlt:"Мапа",themeLbl:"Світла або темна тема"},
+en:{title:"Wild West × Maria Vasylenko",place:"Zoloti Vorota · Podil",test:"TEST",nMap:"Map",nGallery:"Works",nAbout:"About",
+ moreWorks:"Where to find more works →",route:"Get directions",heroH:"Art without an invitation",
+ heroP:"Maria Vasylenko’s works have appeared on the walls, trees and poles of Zoloti Vorota and Podil. Just look up.",
+ openMap:"Open the map",about:"About the project",mapH:"Map",mapMore:"Where to find more works",mapLead:"Tap a work on the map to read about it. You don’t have to find them all.",expand:"⤢ Full screen",
+ galH:"Works",galLead:"All works as a list.",aboutH:"About the project",
+ a1:"The works, printed on aluminium, appear in the city without an invitation: on walls, trees and poles. No opening, no announcement.",
+ a2:"We don’t know how long they will last. That is part of the project.",
+ a3:"You don’t have to find them all. If you saw one, stopped for a few seconds and walked on, that is enough.",
+ aNote:"Placeholder text. We will write the real one together with Maria.",footer:"Wild West × Maria Vasylenko · test version",
+ closeMap:"✕ Close map",workPage:"Open the work page",workNo:"Work No. ",on:"Still up",gone:"Gone",mapAlt:"Map",themeLbl:"Light or dark theme"}
+};
+var lang='uk';
+try{var sl=localStorage.getItem('lang');if(sl==='uk'||sl==='en')lang=sl;else lang=/^uk/i.test(navigator.language||'')?'uk':'en'}catch(_){}
+function t(k){return T[lang][k]}
+function wt(w){return w.t[lang]}
+function wd(w){return w.d[lang]}
+
+function byId(id){return W.filter(function(x){return x.id==id})[0]}
+function gmaps(w){var lat=(50.4487+(50-w.y)*0.00006).toFixed(5),lng=(30.5137+(w.x-28)*0.00008).toFixed(5);return 'https://www.google.com/maps/search/?api=1&query='+lat+','+lng}
+function stat(el,w){el.className='st '+(w.ok?'ok':'no');el.textContent=w.ok?t('on'):t('gone')}
+
+/* ---------- мапа ---------- */
+var fromPin=false;
+var view=$('view'),stage=$('stage'),full=false,S=1,TX=0,TY=0,MIN=1,COV=1,MAX=4,CW=0,CH=0,cur=null;
+stage.style.width=IW+'px';stage.style.height=IH+'px';
+var mimg=stage.querySelector('img');mimg.style.width=IW+'px';mimg.style.height=IH+'px';
+view.style.setProperty('--ar',IW+' / '+IH);
+var LB=[{x:23.0,y:79.05,uk:'Золоті Ворота',en:'Golden Gate',c:'sm l'},{x:31.43,y:65.79,uk:'Софійський собор',en:'St Sophia Cathedral',c:'sm'},{x:43.29,y:58.95,uk:'Михайлівський собор',en:'St Michael\u2019s Monastery',c:'sm'},{x:42.29,y:46.32,uk:'Андріївська церква',en:'St Andrew\u2019s Church',c:'sm'},{x:57.71,y:22.11,uk:'Контрактова площа',en:'Kontraktova Square',c:'sm'},{x:75.71,y:44.21,uk:'Поштова площа',en:'Poshtova Square',c:'sm l'},{x:50.36,y:76.95,uk:'Майдан Незалежності',en:'Maidan Nezalezhnosti',c:'sm'},{x:58.86,y:66.42,uk:'Європейська площа',en:'European Square',c:'sm'},{x:10.71,y:55.26,uk:'Львівська площа',en:'Lvivska Square',c:'sm'},{x:62.14,y:57.47,uk:'Володимирська гірка',en:'Volodymyrska Hill',c:'sm nd',r:0},{x:52.5,y:41.2,uk:'Замкова гора',en:'Castle Hill',c:'sm nd',r:0},{x:46.79,y:82.63,uk:'ХРЕЩАТИК',en:'KHRESHCHATYK',c:'sm nd road',r:-62},{x:45.71,y:36.84,uk:'Андріївський узвіз',en:'Andriivskyi Descent',c:'sm nd road',r:-58},{x:96.86,y:17.37,uk:'Труханів острів',en:'Trukhaniv Island',c:'sm nd',r:-80},{x:66.4,y:6.6,uk:'Поділ',en:'Podil'},{x:90.6,y:66,uk:'Дніпро',en:'Dnipro',c:'river'}];
+LB.forEach(function(l){var d=document.createElement('div');d.className='lbl'+(l.c?' '+l.c:'');d.style.left=(l.x/100*IW)+'px';d.style.top=(l.y/100*IH)+'px';d.textContent=l[lang]||l.uk;if(l.r!==undefined)d.style.setProperty('--r',l.r+'deg');l.el=d;stage.appendChild(d)});
+W.forEach(function(w){
+  var b=document.createElement('button');b.className='pin'+(w.ok?'':' gone');b.id='pin'+w.id;
+  b.style.left=(w.x/100*IW)+'px';b.style.top=(w.y/100*IH)+'px';b.setAttribute('aria-label',wt(w));b.innerHTML='<i></i>';
+  if(w.img>=0)b.firstChild.style.backgroundImage='url('+IMG[w.img]+')';
+  b.addEventListener('pointerdown',function(e){e.stopPropagation()});
+  b.addEventListener('click',function(e){e.stopPropagation();
+    if(full)openSheet(w); else {fromPin=true;location.hash='w'+w.id;}});
+  w.el=b;stage.appendChild(b);
+});
+function clamp(){var w=IW*S,h=IH*S;
+  TX=w<=CW?(CW-w)/2:Math.min(0,Math.max(CW-w,TX));
+  TY=h<=CH?(CH-h)/2:Math.min(0,Math.max(CH-h,TY));}
+function apply(){clamp();view.classList.toggle('zin',S>MIN*1.3);stage.style.setProperty('--s',S);stage.style.transform='translate('+TX+'px,'+TY+'px) scale('+S+')'}
+function fit(){CW=view.clientWidth;CH=view.clientHeight;
+  MIN=Math.min(CW/IW,CH/IH);COV=Math.max(CW/IW,CH/IH);MAX=COV*3;
+  if(!full)S=MIN;else if(S<MIN)S=MIN;apply();}
+function zoomAt(f,cx,cy){var ns=Math.min(MAX,Math.max(MIN,S*f));f=ns/S;TX=cx-(cx-TX)*f;TY=cy-(cy-TY)*f;S=ns;apply()}
+function focusOn(w,sc){S=Math.min(MAX,Math.max(MIN,sc||Math.max(S,COV*1.6)));
+  TX=CW/2-w.x/100*IW*S;TY=CH*0.26-w.y/100*IH*S;apply()}
+function markPin(w){W.forEach(function(o){o.el.classList.toggle('on',o===w)})}
+
+function enterFull(){
+  full=true;view.classList.add('full');document.body.classList.add('fullmode');document.body.style.overflow='hidden';
+  fit();S=Math.max(MIN,COV*1.25);
+  if(cur&&cur.id)focusOn(cur,COV*1.6);else{TX=CW/2-IW*S/2;TY=CH/2-IH*S/2;apply()}
+}
+function exitFull(){
+  full=false;view.classList.remove('full');document.body.classList.remove('fullmode');document.body.style.overflow='';
+  closeSheet();fit();
+}
+$('expand').onclick=function(e){e.stopPropagation();enterFull()};
+$('closeFull').onclick=exitFull;
+$('zin').onclick=function(){zoomAt(1.5,CW/2,CH/2)};
+$('zout').onclick=function(){zoomAt(1/1.5,CW/2,CH/2)};
+view.addEventListener('scroll',function(){view.scrollLeft=0;view.scrollTop=0});
+window.addEventListener('resize',fit);
+
+var ptrs={},pd=0,moved=false;
+view.addEventListener('pointerdown',function(e){
+  if(!full)return;
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};try{view.setPointerCapture(e.pointerId)}catch(_){}
+  moved=false;view.classList.add('drag');
+  var k=Object.keys(ptrs);if(k.length==2){var a=ptrs[k[0]],b=ptrs[k[1]];pd=Math.hypot(a.x-b.x,a.y-b.y)}
+});
+view.addEventListener('pointermove',function(e){
+  var p=ptrs[e.pointerId];if(!p||!full)return;var k=Object.keys(ptrs);
+  if(k.length==1){var dx=e.clientX-p.x,dy=e.clientY-p.y;if(Math.abs(dx)+Math.abs(dy)>2)moved=true;TX+=dx;TY+=dy;p.x=e.clientX;p.y=e.clientY;apply()}
+  else if(k.length==2){p.x=e.clientX;p.y=e.clientY;var a=ptrs[k[0]],b=ptrs[k[1]],d=Math.hypot(a.x-b.x,a.y-b.y);if(pd>0)zoomAt(d/pd,(a.x+b.x)/2,(a.y+b.y)/2);pd=d;moved=true}
+});
+function up(e){delete ptrs[e.pointerId];pd=0;if(!Object.keys(ptrs).length)view.classList.remove('drag')}
+view.addEventListener('pointerup',up);view.addEventListener('pointercancel',up);
+view.addEventListener('wheel',function(e){if(!full)return;e.preventDefault();zoomAt(e.deltaY<0?1.2:1/1.2,e.clientX,e.clientY)},{passive:false});
+view.addEventListener('click',function(){if(full&&!moved)closeSheet()});
+
+/* картка в повноекранній мапі */
+var sheet=$('sheet'),shown=null;
+function openSheet(w){shown=w;markPin(w);
+  var i=$('sI');if(w.img>=0){i.src=IMG[w.img];i.classList.remove('no')}else i.classList.add('no');
+  $('sT').textContent=wt(w);stat($('sS'),w);sheet.classList.add('open');focusOn(w,Math.max(S,COV*1.8))}
+function closeSheet(){sheet.classList.remove('open');shown=null;markPin(cur)}
+$('sx').onclick=closeSheet;
+$('sOpen').onclick=function(){var w=shown;exitFull();if(w)location.hash='w'+w.id};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(sheet.classList.contains('open'))closeSheet();else if(full)exitFull()}});
+
+/* ---------- галерея ---------- */
+
+
+/* ---------- сторінка роботи і маршрути ---------- */
+var work=$('work');
+function showWork(w,keep){
+  cur=w;markPin(w);work.hidden=false;var mh=$('mapHead');mh.setAttribute('data-i','mapMore');mh.textContent=t('mapMore');
+  var p=$('wPic'),im=$('wImg');if(w.img>=0){im.src=IMG[w.img];im.alt=wt(w);p.classList.remove('no')}else p.classList.add('no');
+  $('wN').textContent=t('workNo')+w.id;$('wT').textContent=wt(w);stat($('wS'),w);$('wD').textContent=wd(w);
+  document.title=wt(w)+' — '+t('title');
+  if(!keep)window.scrollTo({top:0,behavior:fromPin?'smooth':'instant'});fromPin=false;
+}
+function route(){
+  var m=/^#w(\d+)$/.exec(location.hash);
+  if(m&&byId(m[1])){showWork(byId(m[1]));return}
+  work.hidden=true;var mh2=$('mapHead');mh2.setAttribute('data-i','mapH');mh2.textContent=t('mapH');document.title=t('title');
+  if(location.hash==='#map'){setTimeout(function(){$('map').scrollIntoView({behavior:'smooth',block:'start'})},30)}
+  else window.scrollTo({top:0,behavior:'instant'});
+}
+window.addEventListener('hashchange',route);
+$('logo').onclick=function(){cur=null;markPin(null);location.hash='';route()};
+
+function applyLang(){
+  document.documentElement.lang=lang;
+  if(typeof LB!=='undefined')LB.forEach(function(l){l.el.textContent=l[lang]||l.uk});
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i]'),function(e){e.textContent=t(e.getAttribute('data-i'))});
+  $('lang').textContent=lang==='uk'?'EN':'UA';
+  stage.querySelector('img').alt=t('mapAlt');
+  W.forEach(function(w){w.el.setAttribute('aria-label',wt(w))});
+  if(!work.hidden&&cur&&cur.id)showWork(cur,true); else document.title=t('title');
+  if(shown){$('sT').textContent=wt(shown);stat($('sS'),shown)}
+}
+$('lang').onclick=function(){lang=lang==='uk'?'en':'uk';try{localStorage.setItem('lang',lang)}catch(_){}applyLang()};
+applyLang();
+fit();route();
+</script>
+</body>
+</html>
