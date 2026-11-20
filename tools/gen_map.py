@@ -229,16 +229,19 @@ for c in churches:
         if np.hypot(*(m[0]-c))<45: m[0]=(m[0]*m[1]+c)/(m[1]+1); m[1]+=1; break
     else: merged.append([c,1])
 print('плям',len(merged))
-nz1=noise(25,31); nz2=noise(9,32)
+dots=np.zeros((H,W),np.float32); glow=np.zeros((H,W),np.float32)
+rr=np.random.default_rng(55)
 for (c,k) in merged:
-    r=78+18*min(k,3)
-    d=np.hypot(xx-c[0],yy-c[1])
-    wob_=1+0.28*(nz1-0.5)*2+0.12*(nz2-0.5)*2
-    v=np.clip((1-d/(r*wob_))*2.4,0,1); v=v*v*(3-2*v)
-    cp=np.maximum(cp,v)
-cp=cv2.GaussianBlur(cp,(0,0),10)*(0.82+0.3*noise(30,33))
-streak=np.clip(0.75+0.5*(st[...,0] if st.ndim>2 else st),0.4,1.3) if False else 1
-out=out+(C(240,238,224)-out)*np.clip(cp*0.36,0,0.36)[...,None]
+    r=12+3*min(k,3)+rr.uniform(-1.5,1.5)
+    th=np.linspace(0,6.283,24,endpoint=False)
+    rad=r*(1+0.10*np.sin(th*3+rr.uniform(0,6))+0.04*rr.normal(size=24))
+    pts=np.array([(c[0]+rad[i]*math.cos(th[i]),c[1]+rad[i]*math.sin(th[i])) for i in range(24)])
+    cv2.fillPoly(dots,[np.int32(np.round(pts*4))],1.0,cv2.LINE_AA,shift=2)
+    cv2.circle(glow,(int(c[0]*4),int(c[1]*4)),int(r*1.9*4),1.0,-1,cv2.LINE_AA,shift=2)
+glow=cv2.GaussianBlur(glow,(0,0),9)
+dots=cv2.GaussianBlur(dots,(0,0),1.6)
+out=out+(C(238,234,214)-out)*np.clip(glow*0.22,0,0.22)[...,None]
+out=out+(C(236,228,200)-out)*np.clip(dots*0.8,0,0.8)[...,None]
 
 out+=(R.random((H,W)).astype(np.float32)[...,None]-0.5)*7
 vig=np.clip(((xx/W-0.5)**2+(yy/H-0.5)**2)*1.6,0,1)
