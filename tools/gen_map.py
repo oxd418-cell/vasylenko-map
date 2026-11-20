@@ -212,6 +212,34 @@ out=mix(out,tex*0.85+C(196,192,172)*0.15,gp*rd*0.9)
 out=mix(out,inkcol,th*0.62*(1-wmf))
 out=mix(out,ink*0.9+tex*0.1,edge*0.35)
 out=mix(out,C(228,226,214),sc_w*0.3)
+# ---- світлі плями на місці церков і інших храмів
+cp=np.zeros((H,W),np.float32)
+churches=[]
+for f in GJ:
+    p=f['properties']
+    if p.get('building') in('church','cathedral','chapel','synagogue') or p.get('amenity')=='place_of_worship' or p.get('religion'):
+        if p.get('religion')=='pagan': continue
+        g_=f['geometry']; c_=g_['coordinates'][0] if g_['type']=='Polygon' else g_['coordinates']
+        try: pts=np.array([P(*q) for q in c_]); churches.append(pts.mean(axis=0))
+        except Exception: pass
+# об'єднуємо дуже близькі
+merged=[]
+for c in churches:
+    for m in merged:
+        if np.hypot(*(m[0]-c))<45: m[0]=(m[0]*m[1]+c)/(m[1]+1); m[1]+=1; break
+    else: merged.append([c,1])
+print('плям',len(merged))
+nz1=noise(25,31); nz2=noise(9,32)
+for (c,k) in merged:
+    r=78+18*min(k,3)
+    d=np.hypot(xx-c[0],yy-c[1])
+    wob_=1+0.28*(nz1-0.5)*2+0.12*(nz2-0.5)*2
+    v=np.clip((1-d/(r*wob_))*2.4,0,1); v=v*v*(3-2*v)
+    cp=np.maximum(cp,v)
+cp=cv2.GaussianBlur(cp,(0,0),10)*(0.82+0.3*noise(30,33))
+streak=np.clip(0.75+0.5*(st[...,0] if st.ndim>2 else st),0.4,1.3) if False else 1
+out=out+(C(240,238,224)-out)*np.clip(cp*0.36,0,0.36)[...,None]
+
 out+=(R.random((H,W)).astype(np.float32)[...,None]-0.5)*7
 vig=np.clip(((xx/W-0.5)**2+(yy/H-0.5)**2)*1.6,0,1)
 out=out*(1-0.22*vig[...,None])
