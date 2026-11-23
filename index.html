@@ -215,7 +215,7 @@ W.forEach(function(w){
   var b=document.createElement('button');b.className='pin'+(w.ok?'':' gone');b.id='pin'+w.id;
   b.style.left=(w.x/100*IW)+'px';b.style.top=(w.y/100*IH)+'px';b.setAttribute('aria-label',wt(w));b.innerHTML='<i></i>';
   if(w.img>=0)b.firstChild.style.backgroundImage='url('+IMG[w.img]+')';
-  if(w.img>=0&&typeof IAR!=='undefined'){var q=IAR[w.img]||1,k=Math.sqrt(q);b.style.width=Math.min(92,44*k)+'px';b.style.height=Math.min(58,44/k)+'px'}
+  if(w.img>=0&&typeof IAR!=='undefined'){var q=IAR[w.img]||1,k=Math.sqrt(q);b.style.width=Math.min(60,28*k)+'px';b.style.height=Math.min(40,28/k)+'px'}
   b.addEventListener('pointerdown',function(e){e.stopPropagation()});
   b.addEventListener('click',function(e){e.stopPropagation();
     if(full)openSheet(w); else {fromPin=true;location.hash='w'+w.id;}});
