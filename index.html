@@ -124,6 +124,16 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);f
 .pin.gone i{inset:9px;border:2px dashed #e9e4d6;border-radius:50%;filter:none}
 .pin.gone.on i{transform:none;border-color:var(--accent)}
 .pin.on::before{border-radius:50%}
+
+/* тихі підписи: не відволікають від робіт */
+.lbl.sm{font-size:10px;font-weight:500;background:rgba(236,232,218,.38);color:#3a3934;opacity:.6;padding:1px 5px 1px 13px}
+.lbl.sm.l{padding:1px 13px 1px 5px}
+.lbl.sm::before{width:4px;height:4px;left:5px;margin-top:-3px}
+.lbl.sm.l::before{left:auto;right:5px}
+.lbl.sm.nd{padding:0 4px;background:rgba(236,232,218,.3);color:#3a4636}
+.lbl.sm.road{font-size:9px;background:rgba(44,43,38,.3);color:#efeadb}
+.lbl.river{opacity:.5;font-size:15px}
+#view.zin .lbl.sm{opacity:.6}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
