@@ -214,7 +214,7 @@ function wt(w){return w.t[lang]}
 function wd(w){return w.d[lang]}
 
 function byId(id){return W.filter(function(x){return x.id==id})[0]}
-function gmaps(w){var lat=(50.4710-w.y/100*0.0249).toFixed(5),lng=(30.5055+w.x/100*0.0295).toFixed(5);return 'https://www.google.com/maps/search/?api=1&query='+lat+','+lng}
+function gmaps(w){var lat=(50.4695-w.y/100*0.0233).toFixed(5),lng=(30.5055+w.x/100*0.0275).toFixed(5);return 'https://www.google.com/maps/search/?api=1&query='+lat+','+lng}
 function stat(el,w){el.className='st '+(w.ok?'ok':'no');el.textContent=w.ok?t('on'):t('gone')}
 
 /* ---------- мапа ---------- */
@@ -223,7 +223,7 @@ var view=$('view'),stage=$('stage'),full=false,S=1,TX=0,TY=0,MIN=1,COV=1,MAX=4,C
 stage.style.width=IW+'px';stage.style.height=IH+'px';
 var mimg=stage.querySelector('img');mimg.style.width=IW+'px';mimg.style.height=IH+'px';
 view.style.setProperty('--ar',IW+' / '+IH);
-var LB=[{x:26.7,y:89.0,uk:'Золоті Ворота',en:'Golden Gate',c:'sm l'},{x:29.9,y:72.4,uk:'Софійський собор',en:'St Sophia Cathedral',c:'sm'},{x:63.7,y:65.5,uk:'Михайлівський монастир',en:'St Michael\u2019s Monastery',c:'sm'},{x:42.4,y:48.2,uk:'Андріївська церква',en:'St Andrew\u2019s Church',c:'sm'},{x:40.7,y:32.8,uk:'Контрактова площа',en:'Kontraktova Square',c:'sm'},{x:70.1,y:46.5,uk:'Поштова площа',en:'Poshtova Square',c:'sm'},{x:60.6,y:84.3,uk:'Майдан Незалежності',en:'Maidan Nezalezhnosti',c:'sm'},{x:75.4,y:75.0,uk:'Європейська площа',en:'European Square',c:'sm'},{x:2.9,y:62.8,uk:'Львівська площа',en:'Lvivska Square',c:'sm'},{x:77.2,y:71.5,uk:'Володимирська гірка',en:'Volodymyrska Hill',c:'sm nd',r:0},{x:56.6,y:93.2,uk:'ХРЕЩАТИК',en:'KHRESHCHATYK',c:'sm nd road',r:-79},{x:30.6,y:42.8,uk:'Андріївський узвіз',en:'Andriivskyi Descent',c:'sm nd road',r:67},{x:24,y:7,uk:'Поділ',en:'Podil',c:''},{x:90,y:30,uk:'Дніпро',en:'Dnipro',c:'river'}];
+var LB=[{x:28.6,y:88.7,uk:'Золоті Ворота',en:'Golden Gate',c:'sm l'},{x:32.1,y:70.9,uk:'Софійський собор',en:'St Sophia Cathedral',c:'sm'},{x:68.3,y:63.6,uk:'Михайлівський монастир',en:'St Michael\u2019s Monastery',c:'sm'},{x:45.5,y:45.1,uk:'Андріївська церква',en:'St Andrew\u2019s Church',c:'sm'},{x:43.7,y:28.6,uk:'Контрактова площа',en:'Kontraktova Square',c:'sm'},{x:75.2,y:43.3,uk:'Поштова площа',en:'Poshtova Square',c:'sm'},{x:65.0,y:83.7,uk:'Майдан Незалежності',en:'Maidan Nezalezhnosti',c:'sm'},{x:80.9,y:73.7,uk:'Європейська площа',en:'European Square',c:'sm'},{x:3.1,y:60.7,uk:'Львівська площа',en:'Lvivska Square',c:'sm'},{x:82.8,y:70.0,uk:'Володимирська гірка',en:'Volodymyrska Hill',c:'sm nd',r:0},{x:60.7,y:93.2,uk:'ХРЕЩАТИК',en:'KHRESHCHATYK',c:'sm nd road',r:-79},{x:32.8,y:39.3,uk:'Андріївський узвіз',en:'Andriivskyi Descent',c:'sm nd road',r:67},{x:22,y:6,uk:'Поділ',en:'Podil',c:''},{x:95,y:24,uk:'Дніпро',en:'Dnipro',c:'river'}];
 LB.forEach(function(l){var d=document.createElement('div');d.className='lbl'+(l.c?' '+l.c:'');d.style.left=(l.x/100*IW)+'px';d.style.top=(l.y/100*IH)+'px';d.textContent=l[lang]||l.uk;if(l.r!==undefined)d.style.setProperty('--r',l.r+'deg');l.el=d;stage.appendChild(d)});
 W.forEach(function(w){
   var b=document.createElement('button');b.className='pin'+(w.ok?'':' gone');b.id='pin'+w.id;

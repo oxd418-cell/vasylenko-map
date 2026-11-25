@@ -81,7 +81,7 @@ tex=mix(tex,C(108,104,90),sc_d*0.35)
 
 import json
 GJ=json.load(open('osm_export.geojson'))['features']
-LON0,LON1,LAT1,LAT0=30.5055,30.5350,50.4710,50.4461
+LON0,LON1,LAT1,LAT0=30.5055,30.5330,50.4695,50.4462
 def P(lon,lat): return ((lon-LON0)/(LON1-LON0)*W,(LAT1-lat)/(LAT1-LAT0)*H)
 def coords(g):
     t=g['type']
